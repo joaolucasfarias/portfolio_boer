@@ -1,0 +1,67 @@
+﻿CREATE TABLE Pessoa (
+	idPessoa SERIAL NOT NULL PRIMARY KEY,
+	nomeCompleto VARCHAR (100) NOT NULL,
+	nomeTratamento VARCHAR (50) NOT NULL,
+	email VARCHAR (70) NOT NULL,
+	login VARCHAR (20) UNIQUE NOT NULL,
+	senha VARCHAR (40) NOT NULL,
+	ativo BOOLEAN NOT NULL DEFAULT TRUE
+);
+
+CREATE TABLE Adm (
+	idAdm SERIAL NOT NULL PRIMARY KEY,
+	idPessoa INT NOT NULL REFERENCES Pessoa (idPessoa)
+		ON UPDATE RESTRICT
+		ON DELETE RESTRICT,
+	qtdModificacoes INT NOT NULL DEFAULT 0
+);
+
+INSERT INTO Pessoa (nomeCompleto, nomeTratamento, email, login, senha) VALUES
+('Administrador', 'Sr. Adm', 'joao.l.farias@hotmail.com', 'adm1', '80177534a0c99a7e3645b52f2027a48b');
+INSERT INTO Adm (idPessoa) VALUES (1);
+
+CREATE TABLE Usuario (
+	idUsuario SERIAL NOT NULL PRIMARY KEY,
+	idPessoa INT NOT NULL REFERENCES Pessoa (idPessoa)
+		ON UPDATE RESTRICT
+		ON DELETE RESTRICT,
+	nomeVisivel VARCHAR (30)
+);
+
+CREATE TABLE Portfolio (
+	idPortfolio SERIAL NOT NULL PRIMARY KEY,
+	idPessoa INT NOT NULL REFERENCES Pessoa (idPessoa)
+		ON UPDATE RESTRICT
+		ON DELETE RESTRICT,
+	nome VARCHAR (50) NOT NULL,
+	titulo VARCHAR (50) NOT NULL,
+	subtitulo VARCHAR (30),
+	descricao TEXT NOT NULL,
+	aprovado BOOLEAN NOT NULL DEFAULT FALSE,
+	ativo BOOLEAN NOT NULL DEFAULT TRUE	
+);
+
+CREATE TABLE PermitirModificar (
+	idPermitidoModificado SERIAL NOT NULL PRIMARY KEY,
+	idPessoa INT NOT NULL REFERENCES Pessoa (idPessoa)
+		ON UPDATE RESTRICT
+		ON DELETE RESTRICT,
+	idPortfolio INT NOT NULL REFERENCES Portfolio (idPortfolio)
+		ON UPDATE RESTRICT
+		ON DELETE RESTRICT,
+	data DATE NOT NULL DEFAULT CURRENT_DATE,
+	modificacao BOOLEAN,
+	mudouVisualizacao BOOLEAN,
+	obs TEXT	
+);
+
+CREATE TABLE Projeto (
+	idProjeto SERIAL NOT NULL PRIMARY KEY,	
+	idPortfolio INT NOT NULL REFERENCES Portfolio (idPortfolio)
+		ON UPDATE RESTRICT
+		ON DELETE RESTRICT,
+	nome VARCHAR (100) NOT NULL,
+	imagem BYTEA NOT NULL,
+	descricao TEXT NOT NULL,
+	relevante BOOLEAN NOT NULL DEFAULT FALSE
+);
