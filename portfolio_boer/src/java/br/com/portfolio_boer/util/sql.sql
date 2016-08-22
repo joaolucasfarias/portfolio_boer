@@ -17,7 +17,7 @@ CREATE TABLE Adm (
 );
 
 INSERT INTO Pessoa (nomeCompleto, nomeTratamento, email, login, senha) VALUES
-('Administrador', 'Sr. Adm', 'joao.l.farias@hotmail.com', 'adm1', '80177534a0c99a7e3645b52f2027a48b');
+('Administrador', 'Sr. Adm', 'joao.l.farias@hotmail.com', 'adm1', MD5());
 INSERT INTO Adm (idPessoa) VALUES (1);
 
 CREATE TABLE Usuario (

@@ -25,7 +25,7 @@ public class PessoaDAOImpl {
             this.conn = ConnectionFactory.getConnection();
             System.out.println("Connectado com sucesso!");
         } catch (Exception ex) {
-            throw new Exception("Problemas ao conectar ao Banco de Dados!\nErro: " + ex.getMessage());
+            throw new Exception("Problemas ao conectar ao Banco de Dados na classe PessoaDAOImpl!\nErro: " + ex.getMessage());
         }
     }
 
@@ -34,7 +34,7 @@ public class PessoaDAOImpl {
         ResultSet rs = null;
         Integer idPessoa = null;
 
-        String sql = "INSERT INTO Pessoa (nomeCompleto, nomeTratamento, email, login, senha)"
+        String sql = "INSERT INTO Pessoa (nomeCompleto, nomeTratamento, email, login, senha) "
                 + "VALUES (?, ?, ?, ?, MD5(?)) RETURNING idPessoa;";
         try {
             stmt = conn.prepareStatement(sql);
