@@ -42,7 +42,7 @@ CREATE TABLE Portfolio (
 );
 
 CREATE TABLE PermitirModificar (
-	idPermitidoModificado SERIAL NOT NULL PRIMARY KEY,
+	idPermitidoModificar SERIAL NOT NULL PRIMARY KEY,
 	idPessoa INT NOT NULL REFERENCES Pessoa (idPessoa)
 		ON UPDATE RESTRICT
 		ON DELETE RESTRICT,
